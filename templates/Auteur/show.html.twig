@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="mt-2 mb-4">Information sur l'auteur</h1>
+        <table class="table table-striped mt-4">
+            <tr>
+                <td>Nom Prenom</td>
+                <td>{{ auteur.nomPrenom }}</td>
+            </tr>
+            <tr>
+                <td>Sexe</td>
+                <td>{{ auteur.sexe }}</td>
+            </tr>
+            <tr>
+                <td>Date de Naissance</td>
+                <td>{{ auteur.dateDeNaissance|date("d/m/Y") }}</td>
+            </tr>
+            <tr>
+                <td>Nationalité</td>
+                <td>{{ auteur.nationalite }}</td>
+            </tr>
+        </table>
+    </div>
+{% endblock %}

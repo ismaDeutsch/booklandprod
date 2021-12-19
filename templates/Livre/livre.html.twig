@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="mt-2 mb-4">Gérer les livres</h1>
+        {% for msg in app.flashes('success') %}
+            <div class="alert alert-success">{{ msg }}</div>
+        {% endfor %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Nombre de pages</th>
+                <th>Date de parution</th>
+                <th>Note</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for livre in livre %}
+                <tr>
+                    <td><a href="{{ path('livre.show', {id: livre.id}) }}"{{ livre.titre }}</a></td>
+                    <td>{{ livre.nbpages }}</td>
+                    <td>{{ livre.dateDeParution|date("d/m/Y")  }}</td>
+                    <td>{{ livre.note }}</td>
+                    <td>
+                        <a href="{{ path('livre.edit', {id: livre.id}) }}" class="btn btn-primary">Editer</a>
+                        <form method="post" action="{{ path('livre.delete', {id: livre.id}) }}" style="display:inline-block" onsubmit="return confirm('Voulez-vous vraiment supprimé le livre ?')">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ livre.id) }}">
+                            <button class="btn btn-danger">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="text-right">
+            <a href="{{ path('livre.add') }}" class="btn btn-primary mt-5">Ajouter un livre</a>
+        </div>
+
+    </div>
+
+{% endblock %}

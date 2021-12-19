@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container mt-4">
+        <h1 class="mt-2 mb-4">Gérer les auteurs</h1>
+        {% for msg in app.flashes('success') %}
+            <div class="alert alert-success">{{ msg }}</div>
+        {% endfor %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Nom Prenom</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for auteur in auteur %}
+                <tr>
+                    <td><a href="{{ path('auteur.show', {id: auteur.id}) }}">{{ auteur.NomPrenom }}</a></td>
+                    <td>
+                        <a href="{{ path('auteur.edit', {id: auteur.id}) }}" class="btn btn-primary">Editer</a>
+                        <form method="post" action="{{ path('auteur.delete', {id: auteur.id}) }}" style="display:inline-block" onsubmit="return confirm('Voulez-vous vraiment supprimé l\'auteur ?')">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ auteur.id) }}">
+                            <button class="btn btn-danger">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="text-right">
+            <a href="{{ path('auteur.add') }}" class="btn btn-primary mt-5">Ajouter un auteur</a>
+        </div>
+
+    </div>
+
+{% endblock %}
