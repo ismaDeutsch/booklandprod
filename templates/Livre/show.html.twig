@@ -21,6 +21,14 @@
                 <td>{{ livre.nbpages }}</td>
             </tr>
             <tr>
+                <td>Auteurs</td>
+                <td>
+                    {% for auteur in livre.auteurs %}
+                        {{ auteur.nomPrenom }},
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
                 <td>Note</td>
                 <td>{{ livre.note }}</td>
             </tr>
