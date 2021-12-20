@@ -22,11 +22,13 @@ class LivreType extends AbstractType
             ->add('auteurs', EntityType::class, [
                 'class' => Auteur::class,
                 'choice_label' => 'nomPrenom',
-                'multiple' => true ])
+                'multiple' => true
+            ])
             ->add('genres', EntityType::class, [
                 'class' => Genre::class,
+                'multiple' => true,
                 'choice_label' => 'nom',
-                'multiple' => true ])
+                ])
             ->add('date_de_parution', DateType::class, [
                 'widget' => 'single_text'
             ])

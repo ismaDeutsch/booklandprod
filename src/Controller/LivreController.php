@@ -4,6 +4,8 @@
 namespace App\Controller;
 
 use App\Entity\Livre;
+use App\Entity\LivreSearch;
+use App\Form\LivreSearchType;
 use App\Form\LivreType;
 use App\Repository\LivreRepository;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,10 +28,16 @@ class LivreController extends AbstractController
     /**
      * @Route("/livre", name="livre.index")
      */
-    public function index()
+    public function index(Request $request)
     {
-        $livre = $this->repo->findAll();
-        return $this->render('Livre/livre.html.twig', ['livre' => $livre]);
+        $search = new LivreSearch();
+        $form = $this->createForm(LivreSearchType::class, $search);
+        $form->handleRequest($request);
+        $livre = $this->repo->findBook($search);
+        return $this->render('Livre/livre.html.twig', [
+            'livre' => $livre,
+            'form' => $form->createView()
+        ]);
     }
 
     /**

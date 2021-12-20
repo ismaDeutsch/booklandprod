@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Genre;
+use App\Entity\GenreSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -17,6 +18,23 @@ class GenreRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Genre::class);
+    }
+
+    /**
+     * @param GenreSearch $search
+     * @return array
+     */
+    public function findGenre(GenreSearch $search): array{
+        $query = $this->createQueryBuilder('g');
+        if($search->getGenre()->count() > 0){
+            $k = 0;
+            foreach ($search->getGenre() as $genre){
+                $k++;
+                $query = $query->orWhere("g = :genre$k")
+                    ->setParameter(":genre$k", $genre);
+            }
+        }
+        return $query->getQuery()->getResult();
     }
 
     // /**

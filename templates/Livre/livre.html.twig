@@ -1,6 +1,43 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <div class="jumbotron mt-5">
+        <div class="container">
+            {{ form_start(form) }}
+            <div class="row">
+                <div class="col">
+                    {{ form_row(form.title) }}
+                </div>
+                <div class="col">
+                    {{ form_row(form.publication_date) }}
+                </div>
+                <div class="col">
+                    {{ form_row(form.publication_date_end) }}
+                </div>
+                <div class="col">
+                    {{ form_row(form.numberOfPage) }}
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col">
+                    {{ form_row(form.authors) }}
+                </div>
+                <div class="col">
+                    {{ form_row(form.genres) }}
+                </div>
+                <div class="col">
+                    {{ form_row(form.noteMin) }}
+                </div>
+                <div class="col">
+                    {{ form_row(form.noteMax) }}
+                </div>
+                <div class="col">
+                    <button class="btn btn-primary">Rechercher</button>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
     <div class="container mt-4">
         <h1 class="mt-2 mb-4">Gérer les livres</h1>
         {% for msg in app.flashes('success') %}
@@ -25,7 +62,8 @@
                     <td>{{ livre.note }}</td>
                     <td>
                         <a href="{{ path('livre.edit', {id: livre.id}) }}" class="btn btn-primary">Editer</a>
-                        <form method="post" action="{{ path('livre.delete', {id: livre.id}) }}" style="display:inline-block" onsubmit="return confirm('Voulez-vous vraiment supprimé le livre ?')">
+                        <form method="post" action="{{ path('livre.delete', {id: livre.id}) }}" style="display:inline-block" onsubmit="
+                        return confirm('Voulez-vous vraiment supprimé le livre ?')">
                             <input type="hidden" name="_method" value="DELETE">
                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ livre.id) }}">
                             <button class="btn btn-danger">Supprimer</button>
@@ -41,5 +79,23 @@
         </div>
 
     </div>
+    {% block stylesheets %}
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    {% endblock %}
+
+    {% block javascripts %}
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        <script>
+            $('.author').select2({
+                placeholder: "Auteurs",
+                allowClear: true
+            });
+
+            $('.genre').select2({
+                placeholder: "Genres",
+                allowClear: true
+            });
+        </script>
+    {% endblock %}
 
 {% endblock %}

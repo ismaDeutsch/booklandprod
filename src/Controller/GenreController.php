@@ -5,6 +5,8 @@ namespace App\Controller;
 
 
 use App\Entity\Genre;
+use App\Entity\GenreSearch;
+use App\Form\GenreSearchType;
 use App\Form\GenreType;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\GenreRepository;
@@ -26,10 +28,14 @@ class GenreController extends AbstractController
     /**
      * @Route ("/genre", name="genre.index")
      */
-    public function index(){
-        $genre = $this->repo->findAll();
+    public function index(Request $request){
+        $search = new GenreSearch();
+        $form = $this->createForm(GenreSearchType::class, $search);
+        $form->handleRequest($request);
+        $genre = $this->repo->findGenre($search);
         return $this->render('Genre/genre.html.twig', [
-            "genre" => $genre
+            "genre" => $genre,
+            'form' => $form->createView()
         ]);
     }
 

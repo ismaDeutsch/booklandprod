@@ -37,6 +37,14 @@ class AuteurRepository extends ServiceEntityRepository
             $query = $query->Where('a.nom_prenom LIKE :name')
                 ->setParameter('name', '%'.$search->getName().'%');
         }
+        if($search->getSexe()){
+            $query = $query->andWhere('a.sexe = :sexe')
+                ->setParameter('sexe', $search->getSexe());
+        }
+        if($search->getNationality()){
+            $query = $query->andWhere('a.nationalite = :nationality')
+                ->setParameter('nationality', $search->getNationality());
+        }
         return $query->getQuery()->getResult();
     }
 
