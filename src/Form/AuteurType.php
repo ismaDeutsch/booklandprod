@@ -16,7 +16,8 @@ class AuteurType extends AbstractType
         $builder
             ->add('nom_prenom')
             ->add('sexe', ChoiceType::class, [
-                'choices' => Auteur::SEXE
+                'choices' => Auteur::SEXE,
+                'placeholder' => 'Sexe'
             ])
             ->add('date_de_naissance', DateType::class, [
                 'widget' => 'single_text'

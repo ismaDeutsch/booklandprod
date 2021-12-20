@@ -29,6 +29,14 @@
                 </td>
             </tr>
             <tr>
+                <td>Genres</td>
+                <td>
+                    {% for genre in livre.genres %}
+                        {{ genre.nom }},
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
                 <td>Note</td>
                 <td>{{ livre.note }}</td>
             </tr>

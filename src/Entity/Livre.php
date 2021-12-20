@@ -49,9 +49,15 @@ class Livre
      */
     private $auteurs;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Genre::class, inversedBy="livres")
+     */
+    private $genres;
+
     public function __construct()
     {
         $this->auteurs = new ArrayCollection();
+        $this->genres = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -139,6 +145,30 @@ class Livre
     public function removeAuteur(Auteur $auteur): self
     {
         $this->auteurs->removeElement($auteur);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Genre[]
+     */
+    public function getGenres(): Collection
+    {
+        return $this->genres;
+    }
+
+    public function addGenre(Genre $genre): self
+    {
+        if (!$this->genres->contains($genre)) {
+            $this->genres[] = $genre;
+        }
+
+        return $this;
+    }
+
+    public function removeGenre(Genre $genre): self
+    {
+        $this->genres->removeElement($genre);
 
         return $this;
     }

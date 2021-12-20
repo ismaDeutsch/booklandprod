@@ -3,6 +3,8 @@
 
 namespace App\Controller;
 
+use App\Entity\AuteurSearch;
+use App\Form\AuteurSearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\AuteurRepository;
@@ -26,11 +28,15 @@ class AuteurController extends AbstractController
      * @Route("/auteur", name="auteur.index")
      */
 
-    public function index()
+    public function index(Request $request)
     {
-        $auteurs = $this->repo->findAll();
+        $search = new AuteurSearch();
+        $form = $this->createForm(AuteurSearchType::class, $search);
+        $form->handleRequest($request);
+        $auteurs = $this->repo->findAuthor($search);
         return $this->render('Auteur/auteur.html.twig', [
-            'auteur' => $auteurs
+            'auteur' => $auteurs,
+            'form' => $form->createView()
         ]);
     }
 

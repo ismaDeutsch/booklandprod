@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Auteur;
+use App\Entity\AuteurSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -17,6 +19,25 @@ class AuteurRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Auteur::class);
+    }
+
+    /**
+     * @param AuteurSearch $search
+     * @return array
+     */
+    public function findAuthor(AuteurSearch $search): array{
+        $query = $this->createQueryBuilder('a');
+        if($search->getMinLivre()){
+            $query = $query->innerJoin('a.livres', 'l')
+                ->groupBy('a.id')
+                ->andHaving($query->expr()->gte($query->expr()->count('l.id'),
+                    $search->getMinLivre()));
+        }
+        if($search->getName()){
+            $query = $query->Where('a.nom_prenom LIKE :name')
+                ->setParameter('name', '%'.$search->getName().'%');
+        }
+        return $query->getQuery()->getResult();
     }
 
     // /**
