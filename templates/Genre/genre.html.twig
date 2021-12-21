@@ -24,6 +24,7 @@
             <thead>
             <tr>
                 <th>Nom</th>
+                <th>Auteurs</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -31,6 +32,13 @@
             {% for genre in genre %}
                 <tr>
                     <td><a href="{{ path('genre.show', {id: genre.id}) }}">{{ genre.Nom }}</a></td>
+                    <td>
+                        {% for book in genre.livres %}
+                            {% for auteur in book.auteurs  %}
+                                {{ auteur.nomPrenom }},
+                            {% endfor %}
+                        {% endfor %}
+                    </td>
                     <td>
                         <a href="{{ path('genre.edit', {id: genre.id}) }}" class="btn btn-primary">Editer</a>
                         <form method="post" action="{{ path('genre.delete', {id: genre.id}) }}" style="display:inline-block"

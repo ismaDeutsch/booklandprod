@@ -45,6 +45,11 @@ class AuteurSearchType extends AbstractType
                     'placeholder' => 'Nationnalité'
                 ]
             ])
+            ->add('year', DateType::class, [
+                'widget' => 'single_text',
+                'required' => false,
+                'label' => false,
+            ])
         ;
     }
 

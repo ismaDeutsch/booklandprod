@@ -45,8 +45,32 @@ class AuteurRepository extends ServiceEntityRepository
             $query = $query->andWhere('a.nationalite = :nationality')
                 ->setParameter('nationality', $search->getNationality());
         }
+        if($search->getYear()){
+            $query =$query->andWhere('a.date_de_naissance = :date')
+                ->setParameter('date', $search->getYear()
+                    ->format('Y-m-d'));
+        }
+
         return $query->getQuery()->getResult();
     }
+
+    public function findGenre(Auteur $auteur){
+        $query = $this->createQueryBuilder('a')
+            ->select('g.id', 'g.nom')
+            ->distinct('g.id, g.nom')
+            ->join('a.livres', 'l')
+            ->join('l.genres', 'g')
+            ->where('a.id = :auteur')
+            ->setParameter('auteur', $auteur->getId());
+
+        return $query->getQuery()->getResult();
+    }
+
+    /*public function findBooksWrite(Auteur $auteur){
+        $query = $this->createQueryBuilder('a')
+            ->;
+        return $query->getQuery()->getResult();
+    }*/
 
     // /**
     //  * @return Auteur[] Returns an array of Auteur objects

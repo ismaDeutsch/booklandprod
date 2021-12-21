@@ -37,6 +37,37 @@ class GenreRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
+    public function findAVG(Genre $genre){
+        $query = $this->createQueryBuilder('g')
+            ->select('AVG (l.nbpages) AS avg')
+            ->innerJoin('g.livres', 'l')
+            ->where('g.id = :id')
+            ->setParameter('id', $genre->getId());
+        dump($query->getQuery()->getResult());
+        return $query->getQuery()->getResult();
+    }
+
+    public function findSUM(Genre $genre){
+        $query = $this->createQueryBuilder('g')
+            ->select('SUM (l.nbpages) AS sum')
+            ->innerJoin('g.livres', 'l')
+            ->where('g.id = :id')
+            ->setParameter('id', $genre->getId());
+
+        return $query->getQuery()->getResult();
+    }
+
+    public function findAuteurGenre(){
+        $query = $this->createQueryBuilder('g')
+            ->select('g.id, g.nom, a.id, a.nom_prenom')
+            ->innerJoin('g.livres', 'l')
+            ->innerJoin('l.auteurs', 'a')
+            ->where('g.id = 1');
+        dump($query->getQuery()->getResult());
+        //return $res;
+    }
+
+
     // /**
     //  * @return Genre[] Returns an array of Genre objects
     //  */

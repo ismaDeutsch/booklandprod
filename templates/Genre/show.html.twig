@@ -8,6 +8,22 @@
                 <td>Nom</td>
                 <td>{{ genre.nom }}</td>
             </tr>
+            <tr>
+                <td>Livres</td>
+                <td>
+                    {% for book in genre.livres %}
+                        {{ book.titre }}
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td>Moyenne de pages</td>
+                <td> {{ avg.0.avg }} </td>
+            </tr>
+            <tr>
+                <td>Nombre de pages</td>
+                <td> {{ sum.0.sum }} </td>
+            </tr>
         </table>
     </div>
 {% endblock %}

@@ -27,11 +27,8 @@ class AuteurSearch
      */
     private $nationality;
 
-    /**
-     * @var int|null
-
     private $year;
-*/
+
     /**
      * @return int|null
      */
@@ -104,22 +101,20 @@ class AuteurSearch
         return $this;
     }
 
-    /**
-     * @return int|null
 
-    public function getYear(): ?int
+    public function getYear()
     {
         return $this->year;
     }
 
     /**
-     * @param int|null $year
+     * @param \DateTimeInterface|null $year
      * @return AuteurSearch
-
-    public function setYear(int $year): AuteurSearch
+     */
+    public function setYear($year): AuteurSearch
     {
         $this->year = $year;
         return $this;
     }
-*/
+
 }

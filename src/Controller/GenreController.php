@@ -33,6 +33,8 @@ class GenreController extends AbstractController
         $form = $this->createForm(GenreSearchType::class, $search);
         $form->handleRequest($request);
         $genre = $this->repo->findGenre($search);
+        $genreAuteur = $this->repo->findAuteurGenre();
+        dump($genreAuteur);
         return $this->render('Genre/genre.html.twig', [
             "genre" => $genre,
             'form' => $form->createView()
@@ -81,12 +83,17 @@ class GenreController extends AbstractController
     /**
      * @Route("/genre/show/{id}", name="genre.show", requirements={"id" = "\d+"})
      */
-    public function show($id){
-        $genre = $this->repo->find($id);
+    public function show(Genre $genre){
         if (!$genre) {
             return $this->redirectToRoute("genre.index");
         }
-        return $this->render('Genre/show.html.twig', ['Genre' => $genre]);
+        $avg = $this->repo->findAVG($genre);
+        $sum = $this->repo->findSUM($genre);
+        return $this->render('Genre/show.html.twig', [
+            'genre' => $genre,
+            'avg' => $avg,
+            'sum' => $sum
+        ]);
     }
 
     /**

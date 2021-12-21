@@ -8,6 +8,8 @@ use App\Entity\LivreSearch;
 use App\Form\LivreSearchType;
 use App\Form\LivreType;
 use App\Repository\LivreRepository;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,13 +45,23 @@ class LivreController extends AbstractController
     /**
      * @Route("/livre/show/{id}", name="livre.show", requirements={"id"="\d+"})
      */
-    public function show($id)
+    public function show(Livre $livre, Request $request)
     {
-        $livre = $this->repo->find($id);
         if (!$livre) {
             return $this->redirectToRoute("livre.index");
         }
-        return $this->render('Livre/show.html.twig', ['livre' => $livre]);
+        $form = $this->createFormBuilder()
+            ->add('note', IntegerType::class)
+            ->add('increase', SubmitType::class, ['label' => '+'])
+            ->add('degrease', SubmitType::class, ['label' => '-'])
+            ->getForm();
+        $form->handleRequest($request);
+        $this->repo->findDistinctAuteur();
+        $this->repo->parite();
+        return $this->render('Livre/show.html.twig', [
+            'livre' => $livre,
+            'form' => $form->createView()
+        ]);
     }
 
     /**

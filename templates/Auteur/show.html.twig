@@ -20,6 +20,22 @@
                 <td>Nationalité</td>
                 <td>{{ auteur.nationalite }}</td>
             </tr>
+            <tr>
+                <td>Livres</td>
+                <td>
+                    {% for book in auteur.livres %}
+                        {{ book.titre }}
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td>Genres</td>
+                <td>
+                    {% for genre in genres %}
+                        {{ genre.nom }},
+                    {% endfor %}
+                </td>
+            </tr>
         </table>
     </div>
 {% endblock %}

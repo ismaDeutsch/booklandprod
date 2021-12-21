@@ -3,6 +3,7 @@
 {% block body %}
     <div class="container mt-4">
         <h1 class="mt-2 mb-4">Informations sur le livre</h1>
+
         <table class="table table-striped mt-4">
             <tr>
                 <td>ISBN</td>
@@ -41,5 +42,11 @@
                 <td>{{ livre.note }}</td>
             </tr>
         </table>
+        <div class="text-right mt-4">
+            {{ form_start(form) }}
+            
+            {{ form_end(form) }}
+        </div>
     </div>
+
 {% endblock %}

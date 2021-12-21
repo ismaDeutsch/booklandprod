@@ -43,11 +43,15 @@ class AuteurController extends AbstractController
     /**
      * @Route("/auteur/show/{id}", name="auteur.show", requirements={"id"="\d+"})
      */
-    public function show($id){
-        $auteur = $this->repo->find($id);
+    public function show(Auteur $auteur){
         if(!$auteur)
             return $this->redirectToRoute('auteur.index');
-        return $this->render('Auteur/show.html.twig', ['auteur' => $auteur]);
+       // $books = $this->repo->findBooksWrite($auteur);
+        $genres = $this->repo->findGenre($auteur);
+        return $this->render('Auteur/show.html.twig', [
+            'auteur' => $auteur,
+            'genres' => $genres
+            ]);
     }
 
     /**
@@ -64,7 +68,10 @@ class AuteurController extends AbstractController
             $this->addFlash('success', 'L\'auteur a bien était modifier');
             return $this->redirectToRoute('auteur.index');
         }
-        return $this->render('Auteur/edit.html.twig', ['form' => $form->createView(), 'auteur' => $auteur]);
+        return $this->render('Auteur/edit.html.twig', [
+            'form' => $form->createView(),
+            'auteur' => $auteur
+        ]);
     }
 
     /**
