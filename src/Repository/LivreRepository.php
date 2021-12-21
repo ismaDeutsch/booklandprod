@@ -90,78 +90,23 @@ class LivreRepository extends ServiceEntityRepository
         return $query->getQuery()->execute();
     }
 
-    public function findDistinctAuteur()
+    public function findDistinctNationality():array
     {
-       $array = $this->find(1);
+        $array = $this->findAll();
         $res = array();
-        $res1 = array();
-
-
-        foreach ($array->getAuteurs() as $auteur){
-            $flag = true;
-            foreach ($array->getAuteurs() as $auteur1){
-                if($auteur1->getNationalite() !== $auteur->getNationalite()){
-                    $flag = false;
-                    break;
-                }
+        foreach ($array as $book){
+            $m = array(); $f = array();
+            foreach ($book->getAuteurs() as $auteur){
+                if($auteur->getSexe() == 'M')
+                    array_push($m, $auteur);
+                else
+                    array_push($f, $auteur);
             }
-            if($flag)
-                array_push($res, $auteur);
-        }
-
-        if(count($res) == $array->getAuteurs()->count())
-            array_push($res1, $array);
-
-
-        /*array_push($res, $array->getAuteurs()->get(0));
-
-        foreach ($array->getAuteurs() as $auteur) {
-           // dump($auteur);
-            foreach ($res as $val){
-                if($auteur->getNationalite() === $val->getNationalite()){
-                    $flag = true;
-                    break;
-                }
-            }
-            if(!$flag)
-                array_push($res, $auteur);
-            $flag = false;
-
-        }
-
-         ($array->getAuteurs() as $item){
-            foreach ($res as $elm){
-                if($item->getNationalite() === $elm->getNationalite){
-                    $flag = true;
-                }
-                break;
-            }
-            if(!$flag){
-                array_push($res, $item);
-            }
-         if (!in_array($auteur, $res)) {
-                array_push($res, $auteur);
-            }
-        }*/
-        //dump($res1);
-    }
-
-    public function parite(){
-        $array = $this->find(1);
-        $m = array();
-        $f = array();
-        $r = array();
-        foreach ($array->getAuteurs() as $auteur){
-            if($auteur->getSexe() == 'M')
-                array_push($m, $auteur);
-            else{
-                array_push($f, $auteur);
+            if(count($m) == count($f)){
+                array_push($res, $book);
             }
         }
-        if(count($m) == count($f))
-            array_push($r,'yes');
-
-        dump($r);
+        return $res;
     }
 
 

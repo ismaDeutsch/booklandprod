@@ -87,8 +87,7 @@ class LivreController extends AbstractController
                 'id' => $livre->getId()
             ]);
         }
-        $this->repo->findDistinctAuteur();
-        $this->repo->parite();
+        $this->repo->findDistinctNationality();
         return $this->render('Livre/show.html.twig', [
             'livre' => $livre,
             'form' => $form->createView()
