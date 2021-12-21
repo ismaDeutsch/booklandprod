@@ -70,6 +70,26 @@ class LivreRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
+    public function increaseNote(Livre $livre, $n){
+        $query = $this->createQueryBuilder('l')
+            ->update()
+            ->set('l.note', 'l.note + :note')
+            ->where('l.id = :id')
+            ->setParameter('note', $n)
+            ->setParameter('id', $livre->getId());
+        return $query->getQuery()->execute();
+    }
+
+    public function degreaseNote(Livre $livre, $n){
+        $query = $this->createQueryBuilder('l')
+            ->update()
+            ->set('l.note', 'l.note - :note')
+            ->where('l.id = :id')
+            ->setParameter('note', $n)
+            ->setParameter('id', $livre->getId());
+        return $query->getQuery()->execute();
+    }
+
     public function findDistinctAuteur()
     {
        $array = $this->find(1);

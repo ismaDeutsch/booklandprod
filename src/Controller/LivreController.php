@@ -51,11 +51,42 @@ class LivreController extends AbstractController
             return $this->redirectToRoute("livre.index");
         }
         $form = $this->createFormBuilder()
-            ->add('note', IntegerType::class)
-            ->add('increase', SubmitType::class, ['label' => '+'])
-            ->add('degrease', SubmitType::class, ['label' => '-'])
+            ->add('note', IntegerType::class, [
+                'label' => false
+            ])
+            ->add('increase', SubmitType::class, [
+                'label' => '+',
+                'attr' => ['class' => 'increase']
+                ])
+            ->add('degrease', SubmitType::class, [
+                'label' => '-',
+                'attr' => ['class' => 'degrease']
+                ])
             ->getForm();
         $form->handleRequest($request);
+
+        if ($form->getClickedButton() === $form->get('increase')){
+            if(($form->getData()['note'] + $livre->getNote())  <= 20){
+                $this->repo->increaseNote($livre, $form->getData());
+                $this->addFlash('success', "La note du livre a bien était augmenté");
+            }else{
+                $this->addFlash('error', "La note du livre ne peut pas depasser 20");
+            }
+            return $this->redirectToRoute('livre.show', [
+                'id' => $livre->getId()
+            ]);
+        }
+        if($form->getClickedButton() === $form->get('degrease')){
+            if(($livre->getNote() - $form->getData()['note']) >= 0){
+                $this->repo->degreaseNote($livre, $form->getData());
+                $this->addFlash('success', "La note du livre a bien était deminuer");
+            }else{
+                $this->addFlash('error', "La note du livre ne peut pas depasser 0");
+            }
+            return $this->redirectToRoute('livre.show', [
+                'id' => $livre->getId()
+            ]);
+        }
         $this->repo->findDistinctAuteur();
         $this->repo->parite();
         return $this->render('Livre/show.html.twig', [

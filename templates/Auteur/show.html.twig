@@ -37,5 +37,19 @@
                 </td>
             </tr>
         </table>
+        <h1 class="mt-2 mb-4">Gérer les notes des livres</h1>
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col">
+                <button type="submit" id="form_degrease" name="form[degrease]" class="btn btn-success decrease" >-</button>
+            </div>
+            <div class="col">
+                {{ form_row(form.note) }}
+            </div>
+            <div class="col">
+                <button type="submit" id="form_increase" name="form[increase]" class="btn btn-success increase">+</button>
+            </div>
+        </div>
+        {{ form_end(form) }}
     </div>
 {% endblock %}

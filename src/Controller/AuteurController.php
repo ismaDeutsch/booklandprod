@@ -6,6 +6,8 @@ namespace App\Controller;
 use App\Entity\AuteurSearch;
 use App\Form\AuteurSearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\AuteurRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,14 +45,55 @@ class AuteurController extends AbstractController
     /**
      * @Route("/auteur/show/{id}", name="auteur.show", requirements={"id"="\d+"})
      */
-    public function show(Auteur $auteur){
+    public function show(Auteur $auteur, Request $request){
         if(!$auteur)
             return $this->redirectToRoute('auteur.index');
        // $books = $this->repo->findBooksWrite($auteur);
         $genres = $this->repo->findGenre($auteur);
+
+        $form = $this->createFormBuilder()
+            ->add('note', IntegerType::class, [
+                'label' => false
+            ])
+            ->add('increase', SubmitType::class, [
+                'label' => '+',
+                'attr' => ['class' => 'increase']
+            ])
+            ->add('degrease', SubmitType::class, [
+                'label' => '-',
+                'attr' => ['class' => 'degrease']
+            ])
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        /*if ($form->getClickedButton() === $form->get('increase')){
+            if(($form->getData()['note'] + $auteur->getNote())  <= 20){
+                $this->repo->increaseNote($auteur, $form->getData());
+                $this->addFlash('success', "La note du livre a bien était augmenté");
+            }else{
+                $this->addFlash('error', "La note du livre ne peut pas depasser 20");
+            }
+            return $this->redirectToRoute('livre.show', [
+                'id' => $auteur->getId()
+            ]);
+        }
+        if($form->getClickedButton() === $form->get('degrease')){
+            if(($auteur->getNote() - $form->getData()['note']) >= 0){
+                $this->repo->degreaseNote($auteur, $form->getData());
+                $this->addFlash('success', "La note du livre a bien était deminuer");
+            }else{
+                $this->addFlash('error', "La note du livre ne peut pas depasser 0");
+            }
+            return $this->redirectToRoute('livre.show', [
+                'id' => $auteur->getId()
+            ]);
+        }*/
+
         return $this->render('Auteur/show.html.twig', [
             'auteur' => $auteur,
-            'genres' => $genres
+            'genres' => $genres,
+            'form' => $form->createView()
             ]);
     }
 
