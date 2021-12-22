@@ -36,6 +36,7 @@ class LivreController extends AbstractController
         $form = $this->createForm(LivreSearchType::class, $search);
         $form->handleRequest($request);
         $livre = $this->repo->findBook($search);
+        dump($this->repo->findDistinctSexe());
         return $this->render('Livre/livre.html.twig', [
             'livre' => $livre,
             'form' => $form->createView()
@@ -87,7 +88,7 @@ class LivreController extends AbstractController
                 'id' => $livre->getId()
             ]);
         }
-        $this->repo->findDistinctNationality();
+
         return $this->render('Livre/show.html.twig', [
             'livre' => $livre,
             'form' => $form->createView()

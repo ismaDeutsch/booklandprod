@@ -67,28 +67,36 @@ class AuteurController extends AbstractController
 
         $form->handleRequest($request);
 
-        /*if ($form->getClickedButton() === $form->get('increase')){
-            if(($form->getData()['note'] + $auteur->getNote())  <= 20){
-                $this->repo->increaseNote($auteur, $form->getData());
-                $this->addFlash('success', "La note du livre a bien était augmenté");
-            }else{
-                $this->addFlash('error', "La note du livre ne peut pas depasser 20");
+        if ($form->getClickedButton() === $form->get('increase')){
+            foreach ($auteur->getLivres() as $book){
+                if(($book->getNote() - $form->getData()['note']) <= 20){
+                    $this->repo->increaseNote($book, $form->getData());
+                    $this->addFlash('success', "La note du 
+                    livre ".$book->getTitre()." a bien était augmenter");
+                }else{
+                    $this->addFlash('error', "La note du 
+                    livre ".$book->getTitre()." ne peut pas étre superieru à 20");
+                }
             }
-            return $this->redirectToRoute('livre.show', [
+            return $this->redirectToRoute('auteur.show', [
                 'id' => $auteur->getId()
             ]);
         }
         if($form->getClickedButton() === $form->get('degrease')){
-            if(($auteur->getNote() - $form->getData()['note']) >= 0){
-                $this->repo->degreaseNote($auteur, $form->getData());
-                $this->addFlash('success', "La note du livre a bien était deminuer");
-            }else{
-                $this->addFlash('error', "La note du livre ne peut pas depasser 0");
+            foreach ($auteur->getLivres() as $book){
+                if(($book->getNote() - $form->getData()['note']) >= 0){
+                    $this->repo->degreaseNote($book, $form->getData());
+                    $this->addFlash('success', "La note du 
+                    livre ".$book->getTitre()." a bien était deminuer");
+                }else{
+                    $this->addFlash('error', "La note du 
+                    livre ".$book->getTitre()." ne peut pas étre en doussous de 0");
+                }
             }
-            return $this->redirectToRoute('livre.show', [
+            return $this->redirectToRoute('auteur.show', [
                 'id' => $auteur->getId()
             ]);
-        }*/
+        }
 
         return $this->render('Auteur/show.html.twig', [
             'auteur' => $auteur,

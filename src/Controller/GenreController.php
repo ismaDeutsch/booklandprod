@@ -100,11 +100,15 @@ class GenreController extends AbstractController
      * @Route ("/genre/edit/{id}", name="genre.delete", requirements={"id" = "\d+"}, methods="DELETE")
      */
     public function delete(Genre $genre, Request $request){
-        if ($this->isCsrfTokenValid('delete' . $genre->getId(), $request->get('_token'))) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($genre);
-            $em->flush();
-            $this->addFlash('success', 'Le genre a bien était supprimé');
+        if($genre->getLivres()->count() == 0){
+            if ($this->isCsrfTokenValid('delete' . $genre->getId(), $request->get('_token'))) {
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($genre);
+                $em->flush();
+                $this->addFlash('success', 'Le genre a bien était supprimé');
+            }
+        }else{
+            $this->addFlash('error', 'Le genre posséde des livres');
         }
         return $this->redirectToRoute('genre.index');
     }

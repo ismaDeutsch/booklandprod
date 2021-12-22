@@ -20,6 +20,9 @@
         {% for msg in app.flashes('success') %}
             <div class="alert alert-success">{{ msg }}</div>
         {% endfor %}
+        {% for msg in app.flashes('error') %}
+            <div class="alert alert-danger">{{ msg }}</div>
+        {% endfor %}
         <table class="table table-striped">
             <thead>
             <tr>
@@ -52,7 +55,6 @@
             {% endfor %}
             </tbody>
         </table>
-
         <div class="text-right">
             <a href="{{ path('genre.add') }}" class="btn btn-primary mt-5">Ajouter un genre</a>
         </div>

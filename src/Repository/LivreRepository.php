@@ -90,7 +90,7 @@ class LivreRepository extends ServiceEntityRepository
         return $query->getQuery()->execute();
     }
 
-    public function findDistinctNationality():array
+    public function findDistinctSexe():array
     {
         $array = $this->findAll();
         $res = array();

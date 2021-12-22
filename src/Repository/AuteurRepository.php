@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Auteur;
 use App\Entity\AuteurSearch;
+use App\Entity\Livre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
@@ -53,6 +54,27 @@ class AuteurRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getResult();
     }
+
+    public function increaseNote(Livre $livre, $n){
+        $query = $this->getEntityManager()
+            ->createQuery("UPDATE App\Entity\Livre l
+                            SET l.note = l.note + :note
+                            WHERE l.id = :id")
+            ->setParameter('note', $n)
+            ->setParameter('id', $livre->getId());
+        return $query->execute();
+    }
+
+    public function degreaseNote(Livre $livre, $n){
+        $query = $this->getEntityManager()
+            ->createQuery("UPDATE App\Entity\Livre l
+                            SET l.note = l.note - :note
+                            WHERE l.id = :id")
+        ->setParameter('note', $n)
+        ->setParameter('id', $livre->getId());
+        return $query->execute();
+    }
+
 
     public function findGenre(Auteur $auteur){
         $query = $this->createQueryBuilder('a')
