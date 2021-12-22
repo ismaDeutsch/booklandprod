@@ -33,10 +33,10 @@ class GenreController extends AbstractController
         $form = $this->createForm(GenreSearchType::class, $search);
         $form->handleRequest($request);
         $genre = $this->repo->findGenre($search);
-        $genreAuteur = $this->repo->findAuteurGenre();
-        dump($genreAuteur);
+        //$genreAuteur = $this->repo->findAuteurGenre();
         return $this->render('Genre/genre.html.twig', [
             "genre" => $genre,
+            "auteurs" => $this->repo->findGSAuteurs(),
             'form' => $form->createView()
         ]);
     }

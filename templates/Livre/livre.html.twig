@@ -74,11 +74,19 @@
             </tbody>
         </table>
 
-        <div class="text-right">
-            <a href="{{ path('livre.add') }}" class="btn btn-primary mt-5">Ajouter un livre</a>
+        <div class="row">
+            <div class="col">
+                <a href="{{ path('livre.add') }}" class="btn btn-primary mt-5">Ajouter un livre</a>
+            </div>
+            <div class="col">
+                <a href="{{ path('livre.parite') }}" class="btn btn-primary mt-5">Livre parite</a>
+            </div>
+            <div class="col">
+                <a href="{{ path('livre.nationality') }}" class="btn btn-primary mt-5">Livre distinct nationalité</a>
+            </div>
         </div>
-
     </div>
+
     {% block stylesheets %}
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     {% endblock %}
@@ -97,5 +105,4 @@
             });
         </script>
     {% endblock %}
-
 {% endblock %}

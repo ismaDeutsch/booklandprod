@@ -109,6 +109,29 @@ class LivreRepository extends ServiceEntityRepository
         return $res;
     }
 
+    public function findDistinctNationality():array
+    {
+        $array = $this->findAll();
+        $res = array();
+
+        foreach ($array as $book){
+            $test = array();
+            $flag = false;
+            array_push($test, $book->getAuteurs()->get(0));
+            for($i = 1; $i < $book->getAuteurs()->count(); $i++){
+                foreach ($test as $testelm){
+                    if($testelm->getNationalite() === $book->getAuteurs()->get($i)->getNationalite())
+                        $flag= true;
+                    else if(!$flag)
+                        array_push($test, $book->getAuteurs()->get($i));
+                }
+            }
+            if(!$flag)
+                array_push($res, $book);
+        }
+        return $res;
+    }
+
 
 
     // /**

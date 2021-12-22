@@ -1,5 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <div class="d-flex flex-column min-vh-100 justify-content-center align-items-center">
+        <img src="/img/Bookland_logo2.png"/>
+        {{ form_start(form) }}
+        <div class="row mt-4">
+            <div class="col">
+                {{ form_row(form.search) }}
+            </div>
+            <div class="col">
+                <button class="btn btn-primary">Recherche</button>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
 
 {% endblock %}

@@ -83,6 +83,7 @@ class AuteurRepository extends ServiceEntityRepository
             ->join('a.livres', 'l')
             ->join('l.genres', 'g')
             ->where('a.id = :auteur')
+            ->orderBy('l.date_de_parution', 'ASC')
             ->setParameter('auteur', $auteur->getId());
 
         return $query->getQuery()->getResult();

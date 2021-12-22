@@ -57,7 +57,7 @@ class GenreRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
-    public function findAuteurGenre(){
+    /*public function findAuteurGenre(){
         $query = $this->createQueryBuilder('g')
             ->select('g.id, g.nom, a.id, a.nom_prenom')
             ->innerJoin('g.livres', 'l')
@@ -65,6 +65,26 @@ class GenreRepository extends ServiceEntityRepository
             ->where('g.id = 1');
         dump($query->getQuery()->getResult());
         //return $res;
+    }*/
+
+    public function findGAuteurs(Genre $genre){
+        $query = $this->createQueryBuilder('g')
+            ->select('DISTINCT a.nom_prenom')
+            ->innerJoin('g.livres', 'l')
+            ->innerJoin('l.auteurs', 'a')
+            ->where('g.id = :id')
+            ->setParameter('id', $genre->getId());
+
+        return $query->getQuery()->getResult();
+    }
+
+    public function findGSAuteurs(){
+        $array = $this->findAll();
+        $result = array();
+        foreach ($array as $genre){
+            array_push($result, $this->findGAuteurs($genre));
+        }
+        return $result;
     }
 
 

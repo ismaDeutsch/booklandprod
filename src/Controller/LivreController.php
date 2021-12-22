@@ -144,4 +144,24 @@ class LivreController extends AbstractController
         }
         return $this->redirectToRoute('livre.index');
     }
+
+    /**
+     * @Route("/livre/distinctNationality", name="livre.nationality")
+     */
+    public function nationality(){
+        $res = $this->repo->findDistinctNationality();
+        return $this->render('Livre/nationality.html.twig', [
+            'livre' => $res
+        ]);
+    }
+
+    /**
+     * @Route("/livre/parite", name="livre.parite")
+     */
+    public function parite(){
+        $res = $this->repo->findDistinctSexe();
+        return $this->render('Livre/parite.html.twig', [
+            'livre' => $res
+        ]);
+    }
 }

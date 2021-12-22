@@ -32,14 +32,12 @@
             </tr>
             </thead>
             <tbody>
-            {% for genre in genre %}
+            {% for key, genre in genre %}
                 <tr>
                     <td><a href="{{ path('genre.show', {id: genre.id}) }}">{{ genre.Nom }}</a></td>
                     <td>
-                        {% for book in genre.livres %}
-                            {% for auteur in book.auteurs  %}
-                                {{ auteur.nomPrenom }},
-                            {% endfor %}
+                        {% for auteur in auteurs[key] %}
+                            {{ auteur.nom_prenom }},
                         {% endfor %}
                     </td>
                     <td>
