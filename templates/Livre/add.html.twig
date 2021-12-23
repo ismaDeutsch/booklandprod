@@ -4,6 +4,7 @@
     <div class="container mt-4">
         <h1 class="mt-2 mb-4">Ajouter un livre</h1>
         {{ form_start(form) }}
+        {{ form_errors(form) }}
         {{ form_rest(form) }}
         <button class="btn btn-success mt-5">Ajouter</button>
         {{ form_end(form)}}

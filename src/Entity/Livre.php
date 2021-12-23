@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\LivreRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use App\Validator as Isbn;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -21,6 +22,7 @@ class Livre
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Isbn\Isbn
      */
     private $isbn;
 
