@@ -2,8 +2,13 @@
 
 
 namespace App\Entity;
-
+use Symfony\Component\Validator\Constraints as Assert;
+use App\Repository\LivreRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 
 class LivreSearch
@@ -18,6 +23,8 @@ class LivreSearch
 
     /**
      * @var int|null
+     * @Assert\GreaterThanOrEqual(value = 10,
+     * message="la valeur doit être >= {{ compared_value }}")
      */
     private $numberOfPage;
 
@@ -39,11 +46,19 @@ class LivreSearch
 
     /**
      * @var int|null
+    * @Assert\GreaterThanOrEqual(value = 0,
+     * message="la valeur doit être supérieure ou égale à {{ compared_value }}")
+     * @Assert\LessThanOrEqual(value = 20,
+     * message="La valeur doit être inférieure ou égale à {{ compared_value }}")
      */
     private $noteMin;
 
     /**
      * @var int|null
+     * @Assert\GreaterThanOrEqual(value = 0,
+     * message="la valeur doit être supérieure ou égale à {{ compared_value }}")
+     * @Assert\LessThanOrEqual(value = 20,
+     * message="La valeur doit être inférieure ou égale à {{ compared_value }}")
      */
     private $noteMax;
 

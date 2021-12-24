@@ -53,7 +53,9 @@ class LivreController extends AbstractController
         }
         $form = $this->createFormBuilder()
             ->add('note', IntegerType::class, [
-                'label' => false
+                'label' => false,
+                 'data' => '1'
+        
             ])
             ->add('increase', SubmitType::class, [
                 'label' => '+',
@@ -106,7 +108,7 @@ class LivreController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->flush();
-            $this->addFlash('success', "Le livre a bien était modifier");
+            $this->addFlash('success', "Le livre a bien été modifié");
             return $this->redirectToRoute('livre.index');
         }
         return $this->render('Livre/edit.html.twig', ['form' => $form->createView(), 'livre' => $livre]);
