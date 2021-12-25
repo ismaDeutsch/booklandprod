@@ -53,7 +53,11 @@ class LivreController extends AbstractController
         }
         $form = $this->createFormBuilder()
             ->add('note', IntegerType::class, [
-                'label' => false
+                'label' => false,
+                'attr' => [
+                    'min' => 1,
+                    'max' => 20
+                ]
             ])
             ->add('increase', SubmitType::class, [
                 'label' => '+',

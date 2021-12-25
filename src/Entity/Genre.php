@@ -6,9 +6,11 @@ use App\Repository\GenreRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=GenreRepository::class)
+ * @UniqueEntity(fields="nom", message="Un genre existe déjà avec ce nom.")
  */
 class Genre
 {
@@ -20,7 +22,7 @@ class Genre
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $nom;
 

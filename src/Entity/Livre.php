@@ -5,11 +5,15 @@ namespace App\Entity;
 use App\Repository\LivreRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use App\Validator as Isbn;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=LivreRepository::class)
+ * @UniqueEntity(fields="isbn", message="Un livre ayant le meme ISBN existe déjà.")
+ * @UniqueEntity(fields="titre", message="Un livre ayant le meme Titre existe déjà.")
  */
 class Livre
 {
@@ -33,16 +37,24 @@ class Livre
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\GreaterThanOrEqual(value = 1,
+     * message="la valeur doit être >= {{ compared_value }}")
      */
     private $nbpages;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\LessThan("today",
+     *     message="la date de naissance doit être corrcte")))
      */
     private $date_de_parution;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\GreaterThanOrEqual(value = 0,
+     * message="la valeur doit être >= {{ compared_value }}")
+     * @Assert\LessThanOrEqual(value = 20,
+     * message="La valeur doit être <= {{ compared_value }}")
      */
     private $note;
 

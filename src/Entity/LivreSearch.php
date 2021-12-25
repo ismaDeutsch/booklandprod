@@ -4,7 +4,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 class LivreSearch
 {
@@ -13,11 +13,22 @@ class LivreSearch
      */
     private $title;
 
+    /**
+     * @Assert\LessThan("today",
+     *     message="la date de naissance doit être corrcte")))
+     */
     private $publication_date;
+
+    /**
+     * @Assert\LessThan("today",
+     *     message="la date de naissance doit être corrcte")))
+     */
     private $publication_date_end;
 
     /**
      * @var int|null
+     * @Assert\GreaterThanOrEqual(value = 1,
+     * message="la valeur doit être >= {{ compared_value }}")
      */
     private $numberOfPage;
 
@@ -39,11 +50,19 @@ class LivreSearch
 
     /**
      * @var int|null
+     * @Assert\GreaterThanOrEqual(value = 0,
+     * message="la valeur doit être supérieure ou égale à {{ compared_value }}")
+     * @Assert\LessThanOrEqual(value = 20,
+     * message="La valeur doit être inférieure ou égale à {{ compared_value }}")
      */
     private $noteMin;
 
     /**
      * @var int|null
+     * @Assert\GreaterThanOrEqual(value = 0,
+     * message="la valeur doit être supérieure ou égale à {{ compared_value }}")
+     * @Assert\LessThanOrEqual(value = 20,
+     * message="La valeur doit être inférieure ou égale à {{ compared_value }}")
      */
     private $noteMax;
 

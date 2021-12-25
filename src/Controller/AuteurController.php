@@ -45,15 +45,22 @@ class AuteurController extends AbstractController
     /**
      * @Route("/auteur/show/{id}", name="auteur.show", requirements={"id"="\d+"})
      */
-    public function show(Auteur $auteur, Request $request){
-        if(!$auteur)
+    public function show($id, Request $request){
+        $auteur = $this->repo->find($id);
+        if(!$auteur){
             return $this->redirectToRoute('auteur.index');
-       // $books = $this->repo->findBooksWrite($auteur);
+        }
         $genres = $this->repo->findGenre($auteur);
 
         $form = $this->createFormBuilder()
             ->add('note', IntegerType::class, [
-                'label' => false
+                'required' => false,
+                'label' => false,
+                'empty_data' => '1',
+                'attr' => [
+                    'min' => 1,
+                    'max' => 20
+                ]
             ])
             ->add('increase', SubmitType::class, [
                 'label' => '+',
@@ -108,12 +115,16 @@ class AuteurController extends AbstractController
     /**
      * @Route("/auteur/edit/{id}", name="auteur.edit", requirements={"id"="\d+"}, methods="GET|POST")
      */
-    public function edit(Auteur $auteur, Request $request)
+    public function edit($id, Request $request)
     {
+        $auteur = $this->repo->find($id);
+        if(!$auteur){
+            return $this->redirectToRoute('auteur.index');
+        }
         $form = $this->createForm(AuteurType::class, $auteur);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             $this->addFlash('success', 'L\'auteur a bien était modifier');
@@ -135,7 +146,7 @@ class AuteurController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($auteur);
             $em->flush();
