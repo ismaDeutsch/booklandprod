@@ -45,18 +45,20 @@
         </table>
         <h1 class="mt-2 mb-4">Gérer les notes des livres</h1>
         {{ form_start(form) }}
-        <div class="row">
-            <div class="col">
-                <div class="btn btn-primary">
-                    {{ form_row(form.degrease) }}
+        <div class="input-group">
+            <div class="row">
+                <div class="col">
+                    <div class="btn btn-primary">
+                        {{ form_row(form.degrease) }}
+                    </div>
                 </div>
-            </div>
-            <div class="col">
-                {{ form_row(form.note) }}
-            </div>
-            <div class="col">
-                <div class="btn btn-primary">
-                    {{ form_row(form.increase) }}
+                <div class="col">
+                    {{ form_row(form.note) }}
+                </div>
+                <div class="col">
+                    <div class="btn btn-primary">
+                        {{ form_row(form.increase) }}
+                    </div>
                 </div>
             </div>
         </div>
