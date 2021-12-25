@@ -25,7 +25,7 @@ class Livre
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\Isbn(
      *     type = "isbn13",
      *     message = "L'ISBN n'est pas valide"
@@ -34,7 +34,7 @@ class Livre
     private $isbn;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $titre;
 
