@@ -25,15 +25,12 @@ class GenreController extends AbstractController
         $this->repo = $repo;
     }
 
-    /**
-     * @Route ("/genre", name="genre.index")
-     */
+
     public function index(Request $request){
         $search = new GenreSearch();
         $form = $this->createForm(GenreSearchType::class, $search);
         $form->handleRequest($request);
         $genre = $this->repo->findGenre($search);
-        //$genreAuteur = $this->repo->findAuteurGenre();
         return $this->render('Genre/genre.html.twig', [
             "genre" => $genre,
             "auteurs" => $this->repo->findGSAuteurs(),
@@ -41,9 +38,7 @@ class GenreController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route ("/genre/add", name="genre.add")
-     */
+
     public function add(Request $request){
         $genre = new Genre();
         $form = $this->createForm(GenreType::class, $genre);
@@ -61,10 +56,13 @@ class GenreController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route ("/genre/edit/{id}", name="genre.edit", requirements={"id" = "\d+"}, methods="GET|POST")
-     */
-    public function edit(Genre $genre, Request $request){
+
+    public function edit($id, Request $request){
+        $genre = $this->repo->find($id);
+        if (!$genre) {
+            return $this->redirectToRoute("genre.index");
+        }
+
         $form = $this->createForm(GenreType::class, $genre);
         $form->handleRequest($request);
 
@@ -80,10 +78,9 @@ class GenreController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/genre/show/{id}", name="genre.show", requirements={"id" = "\d+"})
-     */
-    public function show(Genre $genre){
+
+    public function show($id){
+        $genre = $this->repo->find($id);
         if (!$genre) {
             return $this->redirectToRoute("genre.index");
         }
@@ -96,9 +93,7 @@ class GenreController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route ("/genre/edit/{id}", name="genre.delete", requirements={"id" = "\d+"}, methods="DELETE")
-     */
+
     public function delete(Genre $genre, Request $request){
         if($genre->getLivres()->count() == 0){
             if ($this->isCsrfTokenValid('delete' . $genre->getId(), $request->get('_token'))) {

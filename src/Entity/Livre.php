@@ -48,7 +48,7 @@ class Livre
     /**
      * @ORM\Column(type="date")
      * @Assert\LessThan("today",
-     *     message="la date de naissance doit être corrcte")))
+     *     message="la date de parution doit être corrcte")))
      */
     private $date_de_parution;
 

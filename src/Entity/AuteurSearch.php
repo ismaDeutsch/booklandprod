@@ -27,6 +27,10 @@ class AuteurSearch
      */
     private $nationality;
 
+    /**
+     * @Assert\LessThan("today",
+     *     message="la date de naissance doit être corrcte"))
+     */
     private $year;
 
     /**

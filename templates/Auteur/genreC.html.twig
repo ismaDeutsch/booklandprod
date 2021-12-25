@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="jumbotron mt-5">
+        <div class="container">
+            <h1 class="mt-2 mb-4">Livre</h1>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Auteur</th>
+                    <th>Genres</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for key , auteur in auteurs %}
+                    <tr>
+                        <td>{{ key }}</td>
+                        <td>
+                            {% for genre in auteurs[key] %}
+                                {{ genre.nom }},
+                            {% endfor %}
+                        </td>
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

@@ -15,13 +15,13 @@ class LivreSearch
 
     /**
      * @Assert\LessThan("today",
-     *     message="la date de naissance doit être corrcte")))
+     *     message="la date de parution doit être corrcte")))
      */
     private $publication_date;
 
     /**
      * @Assert\LessThan("today",
-     *     message="la date de naissance doit être corrcte")))
+     *     message="la date de parution doit être corrcte")))
      */
     private $publication_date_end;
 

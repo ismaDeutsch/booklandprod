@@ -78,15 +78,23 @@ class AuteurRepository extends ServiceEntityRepository
 
     public function findGenre(Auteur $auteur){
         $query = $this->createQueryBuilder('a')
-            ->select('g.id', 'g.nom')
-            ->distinct('g.id, g.nom')
-            ->join('a.livres', 'l')
-            ->join('l.genres', 'g')
-            ->where('a.id = :auteur')
+            ->select('g.nom')
+            ->innerJoin('a.livres', 'l')
+            ->innerJoin('l.genres', 'g')
+            ->where('a.id = :id')
             ->orderBy('l.date_de_parution', 'ASC')
-            ->setParameter('auteur', $auteur->getId());
+            ->setParameter('id', $auteur->getId());
+        return array_unique($query->getQuery()->getResult(), SORT_REGULAR);
+    }
 
-        return $query->getQuery()->getResult();
+    public function findAGenre(){
+        $array = $this->findAll();
+        $res = array();
+        foreach ($array as $auteur){
+            if($auteur->getLivres()->count() > 0)
+                $res[$auteur->getNomPrenom()]=$this->findGenre($auteur);
+        }
+        return $res;
     }
 
     /*public function findBooksWrite(Auteur $auteur){

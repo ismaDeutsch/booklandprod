@@ -57,16 +57,6 @@ class GenreRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
-    /*public function findAuteurGenre(){
-        $query = $this->createQueryBuilder('g')
-            ->select('g.id, g.nom, a.id, a.nom_prenom')
-            ->innerJoin('g.livres', 'l')
-            ->innerJoin('l.auteurs', 'a')
-            ->where('g.id = 1');
-        dump($query->getQuery()->getResult());
-        //return $res;
-    }*/
-
     public function findGAuteurs(Genre $genre){
         $query = $this->createQueryBuilder('g')
             ->select('DISTINCT a.nom_prenom')

@@ -1,3 +1,120 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+
+
+# -------------------HomeController----------------------
+home:
+  path: /bookland
+  controller: App\Controller\HomeController::home
+
+init:
+  path: /bookland/init
+  controller: App\Controller\HomeController::init
+
+
+# -------------------AuteurController----------------------
+
+auteur.index:
+  path: /bookland/auteur
+  controller: App\Controller\AuteurController::index
+
+auteur.show:
+  path: /bookland/auteur/show/{id}
+  controller: App\Controller\AuteurController::show
+  requirements:
+    id: \d+
+
+auteur.edit:
+  path: /bookland/auteur/edit/{id}
+  controller: App\Controller\AuteurController::edit
+  requirements:
+    id: \d+
+  methods:
+    "GET|POST"
+
+auteur.add:
+  path: /bookland/auteur/add
+  controller: App\Controller\AuteurController::add
+
+auteur.delete:
+  path: /bookland/auteur/edit/{id}
+  controller: App\Controller\AuteurController::delete
+  methods:
+    "DELETE"
+
+auteur.genre:
+  path: /bookland/auteur/genreC
+  controller: App\Controller\AuteurController::genreChronologique
+
+# -------------------GenreController----------------------
+
+genre.index:
+  path: /bookland/genre
+  controller: App\Controller\GenreController::index
+
+genre.add:
+  path: /bookland/genre/add
+  controller: App\Controller\GenreController::add
+
+genre.edit:
+  path: /bookland/genre/edit/{id}
+  controller: App\Controller\GenreController::edit
+  requirements:
+    id: \d+
+  methods:
+    "GET|POST"
+
+genre.show:
+  path: /bookland/genre/show/{id}
+  controller: App\Controller\GenreController::show
+  requirements:
+    id: \d+
+
+genre.delete:
+  path: /bookland/genre/edit/{id}
+  controller: App\Controller\GenreController::delete
+  methods:
+    "DELETE"
+
+# -------------------LivreController----------------------
+
+
+livre.index:
+  path: /bookland/livre
+  controller: App\Controller\LivreController::index
+
+livre.add:
+  path: /bookland/livre/add
+  controller: App\Controller\LivreController::add
+
+livre.edit:
+  path: /bookland/livre/edit/{id}
+  controller: App\Controller\LivreController::edit
+  requirements:
+    id: \d+
+  methods:
+    "GET|POST"
+
+livre.show:
+  path: /bookland/livre/show/{id}
+  controller: App\Controller\LivreController::show
+  requirements:
+    id: \d+
+
+livre.delete:
+  path: /bookland/livre/edit/{id}
+  controller: App\Controller\LivreController::delete
+  methods:
+    "DELETE"
+
+livre.nationality:
+  path: /bookland/livre/distinctNationality
+  controller: App\Controller\LivreController::nationality
+
+livre.parite:
+  path: /bookland/livre/parite
+  controller: App\Controller\LivreController::parite
+
+

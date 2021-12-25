@@ -26,10 +26,6 @@ class AuteurController extends AbstractController
         $this->repo = $repo;
     }
 
-    /**
-     * @Route("/auteur", name="auteur.index")
-     */
-
     public function index(Request $request)
     {
         $search = new AuteurSearch();
@@ -42,9 +38,7 @@ class AuteurController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/auteur/show/{id}", name="auteur.show", requirements={"id"="\d+"})
-     */
+
     public function show($id, Request $request){
         $auteur = $this->repo->find($id);
         if(!$auteur){
@@ -76,7 +70,7 @@ class AuteurController extends AbstractController
 
         if ($form->getClickedButton() === $form->get('increase')){
             foreach ($auteur->getLivres() as $book){
-                if(($book->getNote() - $form->getData()['note']) <= 20){
+                if(($book->getNote() + $form->getData()['note']) <= 20){
                     $this->repo->increaseNote($book, $form->getData());
                     $this->addFlash('success', "La note du 
                     livre ".$book->getTitre()." a bien était augmenter");
@@ -97,7 +91,7 @@ class AuteurController extends AbstractController
                     livre ".$book->getTitre()." a bien était deminuer");
                 }else{
                     $this->addFlash('error', "La note du 
-                    livre ".$book->getTitre()." ne peut pas étre en doussous de 0");
+                    livre ".$book->getTitre()." ne peut pas étre en dessous de 0");
                 }
             }
             return $this->redirectToRoute('auteur.show', [
@@ -112,9 +106,7 @@ class AuteurController extends AbstractController
             ]);
     }
 
-    /**
-     * @Route("/auteur/edit/{id}", name="auteur.edit", requirements={"id"="\d+"}, methods="GET|POST")
-     */
+
     public function edit($id, Request $request)
     {
         $auteur = $this->repo->find($id);
@@ -136,9 +128,7 @@ class AuteurController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/auteur/add", name="auteur.add")
-     */
+
     public function add(Request $request)
     {
         $auteur = new Auteur();
@@ -157,9 +147,7 @@ class AuteurController extends AbstractController
         return $this->render('Auteur/add.html.twig', ['form' => $form->createView()]);
     }
 
-    /**
-     * @Route("/auteur/edit/{id}", name="auteur.delete", methods="DELETE")
-     */
+
     public function delete(Auteur $auteur, Request $request)
     {
         if ($this->isCsrfTokenValid('delete' . $auteur->getId(), $request->get('_token'))) {
@@ -169,5 +157,13 @@ class AuteurController extends AbstractController
             $this->addFlash('success', 'L\'auteur a bien était supprimé');
         }
         return $this->redirectToRoute('auteur.index');
+    }
+
+    public function genreChronologique(){
+        $res = $this->repo->findAGenre();
+
+        return $this->render('Auteur/genreC.html.twig', [
+            'auteurs' => $res
+        ]);
     }
 }

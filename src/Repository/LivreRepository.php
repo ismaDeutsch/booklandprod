@@ -37,7 +37,7 @@ class LivreRepository extends ServiceEntityRepository
         }
         if($search->getTitle()){
             $query = $query->andWhere('l.titre LIKE :title')
-                ->setParameter('title', $search->getTitle().'%');
+                ->setParameter('title', '%'.$search->getTitle().'%');
         }
         if($search->getPublicationDate()){
             $query = $query->andWhere('l.date_de_parution >= :dateBegin')
@@ -52,26 +52,12 @@ class LivreRepository extends ServiceEntityRepository
                 ->setParameter('page', $search->getNumberOfPage());
         }
         if($search->getNoteMin()){
-           /* if($search->getNoteMax()){
-                if($search->getNoteMin() <= $search->getNoteMax()){*/
-                    $query = $query->andWhere('l.note >= :noteMin')
-                        ->setParameter('noteMin', $search->getNoteMin());
-                /*}
-            }else{
-                $query = $query->andWhere('l.note >= :noteMin')
-                    ->setParameter('noteMin', $search->getNoteMin());
-            }*/
+            $query = $query->andWhere('l.note >= :noteMin')
+                ->setParameter('noteMin', $search->getNoteMin());
         }
         if($search->getNoteMax()){
-            /*if($search->getNoteMin()){
-                if($search->getNoteMin() <= $search->getNoteMax()){*/
-                    $query = $query->andWhere('l.note <= :noteMax')
-                        ->setParameter('noteMax', $search->getNoteMax());
-                /*}
-            }else{
-                $query = $query->andWhere('l.note <= :noteMax')
-                    ->setParameter('noteMax', $search->getNoteMax());
-            }*/
+            $query = $query->andWhere('l.note <= :noteMax')
+                ->setParameter('noteMax', $search->getNoteMax());
         }
         if($search->getGenres()->count() > 0){
             $k = 0;
