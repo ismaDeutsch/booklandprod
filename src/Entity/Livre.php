@@ -26,7 +26,10 @@ class Livre
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Isbn\Isbn
+     * @Assert\Isbn(
+     *     type = "isbn13",
+     *     message = "L'ISBN n'est pas valide"
+     * )
      */
     private $isbn;
 
